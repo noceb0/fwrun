@@ -16,7 +16,7 @@ export TOPDIR		:=	$(CURDIR)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-all: bootloader $(TARGET).nds
+all: $(TARGET).nds
 
 #---------------------------------------------------------------------------------
 $(TARGET).nds	:	arm7/$(TARGET).elf arm9/$(TARGET).elf
@@ -27,19 +27,19 @@ arm7 arm7/$(TARGET).elf:
 	$(MAKE) -C arm7
 	
 #---------------------------------------------------------------------------------
-arm9 arm9/$(TARGET).elf:
+arm9 arm9/$(TARGET).elf: bootloader
 	$(MAKE) -C arm9
 
 #---------------------------------------------------------------------------------
 data:
-	@mkdir -p data
+	@mkdir -p build
 
 bootloader: data
-	@$(MAKE) -C bootloader LOADBIN=$(CURDIR)/data/load.bin
+	@$(MAKE) -C bootloader LOADBIN=$(CURDIR)/build/load.bin
 
 #---------------------------------------------------------------------------------
 clean:
 	$(MAKE) -C arm9 clean
 	$(MAKE) -C arm7 clean
 	$(MAKE) -C bootloader clean
-	rm -rf data $(TARGET).nds $(TARGET).arm7 $(TARGET).arm9
+	rm -rf build $(TARGET).nds $(TARGET).arm7 $(TARGET).arm9

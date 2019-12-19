@@ -1,6 +1,7 @@
 # dont include build relics and binaries
 build/
-./data/
+bootloader/*.bin
+data/load.bin
 *.elf
 *.nds
 
