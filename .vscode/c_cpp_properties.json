@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "devkitarm",
+            "includePath": [
+                "C:\\devkitPro\\devkitARM\\arm-none-eabi\\include",
+                "C:\\devkitPro\\libnds\\include",
+                "./include",
+                "./arm9/build"
+            ]
+        }
+    ],
+    "version": 4
+}

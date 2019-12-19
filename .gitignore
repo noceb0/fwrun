@@ -1,0 +1,8 @@
+# dont include build relics and binaries
+build/
+./data/
+*.elf
+*.nds
+
+# fwrun can compile in a firmware.bin, but you cant have mine!
+arm9/data/firmware.bin
