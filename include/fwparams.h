@@ -16,6 +16,7 @@ typedef struct {
 
 typedef struct {
     u8* fwdata;
+    u8* key1data;
     fwAddrs boot9;
     fwAddrs boot7;
     fwAddrs gui9;

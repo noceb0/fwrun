@@ -5,5 +5,9 @@ data/load.bin
 *.elf
 *.nds
 
-# fwrun can compile in a firmware.bin, but you cant have mine!
+# fwrun can compile in a firmware.bin+bios7.bin, but you cant have mine!
 arm9/data/firmware.bin
+arm9/data/bios7.bin
+
+# fuck off
+.vscode/settings.json

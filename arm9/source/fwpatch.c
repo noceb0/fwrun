@@ -53,9 +53,6 @@ int fwpatch(fwunpackParams* params) {
     for (u32 i = 0; i < 7; i++) {
         void* nextnop = sect9n0 + nop9n0[i];
         for (u8* j = nextnop; j < (u8*)nextnop + 4; j++) *(u8*)j = 0;
-        //u32* nextnop = sect9n0 + 2 + nop9n0[i];
-        //printf("nop 0x%08X\n", nextnop);
-        //*nextnop = 0;
     }
 
     return 0;
