@@ -28,7 +28,7 @@
 extern "C" {
 #endif
 
-int loaderRun(fwunpackParams* params);
+void loader_run();
 
 #ifdef __cplusplus
 }

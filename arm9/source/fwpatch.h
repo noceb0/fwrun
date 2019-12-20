@@ -1,3 +1,3 @@
 #include "fwunpack.h"
 
-int fwpatch(fwunpackParams* params);
+int fwpatch();

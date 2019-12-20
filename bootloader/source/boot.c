@@ -33,6 +33,8 @@ Helpful information:
  This code runs from VRAM bank C on ARM7
 ------------------------------------------------------------------*/
 
+// nds and dldi-specific stuff removed by nocebo
+
 #include <nds/ndstypes.h>
 #include <nds/dma.h>
 #include <nds/system.h>
@@ -166,50 +168,6 @@ void resetMemory_ARM7 (void)
 }
 
 
-/*void loadBinary_ARM7 (u32 fileCluster)
-{
-	u32 ndsHeader[0x170>>2];
-
-	// read NDS header
-	fileRead ((char*)ndsHeader, fileCluster, 0, 0x170);
-	// read ARM9 info from NDS header
-	u32 ARM9_SRC = ndsHeader[0x020>>2];
-	char* ARM9_DST = (char*)ndsHeader[0x028>>2];
-	u32 ARM9_LEN = ndsHeader[0x02C>>2];
-	// read ARM7 info from NDS header
-	u32 ARM7_SRC = ndsHeader[0x030>>2];
-	char* ARM7_DST = (char*)ndsHeader[0x038>>2];
-	u32 ARM7_LEN = ndsHeader[0x03C>>2];
-
-	// Load binaries into memory
-	fileRead(ARM9_DST, fileCluster, ARM9_SRC, ARM9_LEN);
-	fileRead(ARM7_DST, fileCluster, ARM7_SRC, ARM7_LEN);
-
-	// first copy the header to its proper location, excluding
-	// the ARM9 start address, so as not to start it
-	TEMP_ARM9_START_ADDRESS = ndsHeader[0x024>>2];		// Store for later
-	ndsHeader[0x024>>2] = 0;
-	dmaCopyWords(3, (void*)ndsHeader, (void*)NDS_HEAD, 0x170);
-
-	if (dsiMode && (ndsHeader[0x10>>2]&BIT(16+1)))
-	{
-		// Read full TWL header
-		fileRead((char*)TWL_HEAD, fileCluster, 0, 0x1000);
-
-		u32 ARM9i_SRC = *(u32*)(TWL_HEAD+0x1C0);
-		char* ARM9i_DST = (char*)*(u32*)(TWL_HEAD+0x1C8);
-		u32 ARM9i_LEN = *(u32*)(TWL_HEAD+0x1CC);
-		u32 ARM7i_SRC = *(u32*)(TWL_HEAD+0x1D0);
-		char* ARM7i_DST = (char*)*(u32*)(TWL_HEAD+0x1D8);
-		u32 ARM7i_LEN = *(u32*)(TWL_HEAD+0x1DC);
-
-		if (ARM9i_LEN)
-			fileRead(ARM9i_DST, fileCluster, ARM9i_SRC, ARM9i_LEN);
-		if (ARM7i_LEN)
-			fileRead(ARM7i_DST, fileCluster, ARM7i_SRC, ARM7i_LEN);
-	}
-}*/
-
 /*-------------------------------------------------------------------------
 startBinary_ARM7
 Jumps to the ARM7 NDS binary in sync with the display and ARM9
@@ -239,7 +197,7 @@ void startBinary_ARM9();
 
 void twl2ntr_arm9(fwunpackParams* params);
 
-int main (void) {
+int main() {
 
 	// ARM9 clears its memory part 2
 	// copy ARM9 function to RAM, and make the ARM9 jump to it

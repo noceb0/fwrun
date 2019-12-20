@@ -27,6 +27,7 @@ typedef struct {
     u16 crc;
 } fwPreferencesExtended;
 
+// not using libnds struct because it lacks the ique/korean-specific extended settings
 typedef struct {
     u16 version;
     u8 color;

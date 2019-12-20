@@ -35,7 +35,7 @@ typedef struct {
     u16 unused2;
 } fwHeader;
 
-extern int fwunpack_stage1(fwunpackParams* params);
-extern int fwunpack_stage3(fwunpackParams* params);
+extern int fwunpack_stage1();
+extern int fwunpack_stage3();
 
 #endif

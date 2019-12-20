@@ -20,6 +20,8 @@
  project at chishm@hotmail.com
 ------------------------------------------------------------------*/
 
+@ nds and dldi-specific stuff removed by nocebo
+
 @---------------------------------------------------------------------------------
 	.section ".init"
 	.global _start

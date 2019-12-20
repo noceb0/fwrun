@@ -1,5 +1,9 @@
+// fwrun
+// bootcode patcher (a la fw2nds)
+
 #include <stdio.h>
 
+#include "main.h"
 #include "fwunpack.h"
 
 void* memmem(const void* haystack, size_t haystacklen, const void* needle, size_t needlelen);
@@ -12,7 +16,7 @@ u8 boot9n0[4] = { 0x14, 0x48, 0x15, 0x49 }; // gui9/guidata tmpaddr and flash lo
 #define OFFSET_GUI9_9N0 0x54
 #define OFFSET_GUIDATA_9N0 0x9C
 
-// fw2nds flash load disable patches, originally diffed out of firmware.nds
+// fw2nds flash load disable patches, originally diffed out of firmware.nds (which was created by Loopy)
 u32 nop9n0[7] = {
     0x04, // prevents a flash read (gui9?)
     0x10, // prevents a flash read (gui7?)
@@ -23,30 +27,30 @@ u32 nop9n0[7] = {
     0x7C  // prevents a crc check (guidata?)
 };
 
-int fwpatch(fwunpackParams* params) {
+int fwpatch() {
 
     // special region 0 offset in boot7
-    u8* search7 = params->boot7.tmpaddr ? params->boot7.tmpaddr : params->boot7.ramaddr;
-    u8* sect7n0 = memmem(search7, params->boot7.size, boot7n0, 4);
+    u8* search7 = params.boot7.tmpaddr ? params.boot7.tmpaddr : params.boot7.ramaddr;
+    u8* sect7n0 = memmem(search7, params.boot7.size, boot7n0, 4);
     if (!sect7n0) {
         printf("7n0 needle not found!\n");
         return 1;
     }
     printf("landmark 7n0 @ 0x%08X\n", sect7n0);
-    params->gui7.ramaddr = *(u32*)(sect7n0 + OFFSET_GUI7_7N0);
-    printf("gui7 -> 0x%08X\n", params->gui7.ramaddr);
+    params.gui7.ramaddr = *(u32*)(sect7n0 + OFFSET_GUI7_7N0);
+    printf("gui7 -> 0x%08X\n", params.gui7.ramaddr);
 
     // special region 0 offset in boot9
-    u8* search9 = params->boot9.tmpaddr ? params->boot9.tmpaddr : params->boot9.ramaddr;
-    u8* sect9n0 = memmem(search9, params->boot9.size, boot9n0, 4);
+    u8* search9 = params.boot9.tmpaddr ? params.boot9.tmpaddr : params.boot9.ramaddr;
+    u8* sect9n0 = memmem(search9, params.boot9.size, boot9n0, 4);
     if (!sect9n0) {
         printf("9n0 needle not found!\n");
         return 1;
     }
     printf("landmark 9n0 @ 0x%08X\n", sect9n0);
-    params->gui9.ramaddr = *(u32*)(sect9n0 + OFFSET_GUI9_9N0);
-    params->guidata.ramaddr = *(u32*)(sect9n0 + OFFSET_GUIDATA_9N0);
-    printf("gui9 -> 0x%08X\nguidata -> 0x%08X\n", params->gui9.ramaddr, params->guidata.ramaddr);
+    params.gui9.ramaddr = *(u32*)(sect9n0 + OFFSET_GUI9_9N0);
+    params.guidata.ramaddr = *(u32*)(sect9n0 + OFFSET_GUIDATA_9N0);
+    printf("gui9 -> 0x%08X\nguidata -> 0x%08X\n", params.gui9.ramaddr, params.guidata.ramaddr);
     
     // apply patches to boot9
     printf("patch boot9\n");

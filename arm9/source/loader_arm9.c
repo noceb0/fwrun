@@ -16,8 +16,10 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 ------------------------------------------------------------------*/
+
+// nds and dldi-specific stuff removed by nocebo
+
 #include <string.h>
 #include <nds.h>
 #include <nds/memory.h>
@@ -25,6 +27,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 
+#include "main.h"
 #include "fwparams.h"
 
 #include "load_bin.h"
@@ -45,7 +48,7 @@ static void vramcpy(void* dst, const void* src, int len) {
 	}
 }	
 
-int loaderRun(fwunpackParams* params) {
+void loader_run() {
 
 	// Direct CPU access to VRAM bank C
 	VRAM_C_CR = VRAM_ENABLE | VRAM_C_LCD;
@@ -54,7 +57,7 @@ int loaderRun(fwunpackParams* params) {
 
     // put strap7 args in place
     strap7Args* args = ((strap7Args*)LCDC_BANK_C);
-    args->params = params;
+    args->params = &params;
 
     nocashMessage("irqDisable()");
 	irqDisable(IRQ_ALL);
@@ -70,6 +73,5 @@ int loaderRun(fwunpackParams* params) {
 
     nocashMessage("swiSoftReset()");
 	swiSoftReset();
-	return true;
 
 }

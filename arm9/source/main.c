@@ -1,3 +1,6 @@
+// fwrun
+// entrypoint
+
 #include "main.h"
 
 #include <nds.h>
@@ -88,23 +91,23 @@ int main(void) {
 	}
 
 	printf("1) begin unpacking\n");
-	fwunpack_stage1(&params);
+	fwunpack_stage1();
 
 	printf("2) patch bootcode\n");
-	if (fwpatch(&params)) {
+	if (fwpatch()) {
 		printf("patching failed!\n");
 		hang();
 		return 1;
 	}
 
 	printf("3) finish unpacking\n");
-	fwunpack_stage3(&params);
+	fwunpack_stage3();
 
 	printf("4) patch preferences\n");
-	patch_preferences(&params);
+	patch_preferences();
 
 	printf("5) pass control to firmware\n");
-	loaderRun(&params);
+	loader_run();
 
 	return 0;
 }
