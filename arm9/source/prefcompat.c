@@ -1,6 +1,10 @@
 // fwrun
 // system preference patcher (for 3ds and ique+korean compatibility) (a la ntrldr)
 
+// ntrldr was one of the first pieces of software i ever wrote in C
+// im a lot better with it now, and hopefully this file (which is essentially a
+// reimplementation of ntrldr with more features) is a testament to that :P
+
 #include <stdio.h>
 #include <nds.h>
 #include <nds/system.h>

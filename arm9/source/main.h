@@ -4,10 +4,10 @@
 // get vscode to shut the fuck up
 #define NDS
 
-// define these to bundle in arm9/data/firmware.bin and arm9/data/bios7
+// define these to bundle in arm9/data/firmware.bin and arm9/data/bios7.bin
 // both of these being defined also disables fat init
-#define EMBEDDED_FIRMWARE
-#define EMBEDDED_BIOS7
+//#define EMBEDDED_FIRMWARE
+//#define EMBEDDED_BIOS7
 
 #include "fwunpack.h"
 
