@@ -1,12 +1,9 @@
-#ifndef MAIN_PARAMS_H
-#define MAIN_PARAMS_H
+#pragma once
 
 // get vscode to shut the fuck up
 #define NDS
 
-// define these to bundle in arm9/data/firmware.bin and arm9/data/bios7.bin
-// both of these being defined also disables fat init
-//#define EMBEDDED_FIRMWARE
+// define to bundle in key1
 //#define EMBEDDED_BIOS7
 
 #include "fwunpack.h"
@@ -15,4 +12,7 @@
 
 extern fwunpackParams params;
 
+#ifndef FWRUN_LOADER
+#include <stdio.h>
+extern FILE* image;
 #endif

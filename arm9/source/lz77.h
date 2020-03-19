@@ -1,11 +1,8 @@
 
-#ifndef LZ77_H
-#define LZ77_H
+#pragma once
 
 #include "nds/ndstypes.h"
 
-#include "get_data.h"
+#include "fetch.h"
 
-void Decompress_LZ77(GET_DATA get_data, u8* dest, int dest_size);
-
-#endif
+void Decompress_LZ77(u8* dest, int dest_size, bool decrypt);

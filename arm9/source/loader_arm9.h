@@ -19,8 +19,7 @@
 
 ------------------------------------------------------------------*/
 
-#ifndef NDS_LOADER_ARM9_H
-#define NDS_LOADER_ARM9_H
+#pragma once
 
 #include <nds/ndstypes.h>
 
@@ -33,5 +32,3 @@ void loader_run();
 #ifdef __cplusplus
 }
 #endif
-
-#endif // NDS_LOADER_ARM7_H

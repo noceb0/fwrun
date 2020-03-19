@@ -20,6 +20,8 @@
 
 // nds and dldi-specific stuff removed by nocebo
 
+#define FWRUN_LOADER
+
 #include <string.h>
 #include <nds.h>
 #include <nds/memory.h>

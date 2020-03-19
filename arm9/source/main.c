@@ -4,7 +4,6 @@
 #include "main.h"
 
 #include <nds.h>
-#include <stdio.h>
 #include <string.h>
 #include <fat.h>
 
@@ -25,6 +24,7 @@
 #endif
 
 fwunpackParams params;
+FILE* image;
 
 void hang() {
 	while(1) swiWaitForVBlank();
@@ -46,21 +46,16 @@ int fwRead() {
 #endif
 	printf("got key1 (%X,%X)\n", params.key1data, swiCRC16(0xFFFF, params.key1data, KEY1_SIZE));
 
-	printf("reading firmware.bin...");
-#ifndef EMBEDDED_FIRMWARE
-	FILE* fw_bin = fopen("firmware.bin", "rb");
-	if (!fw_bin) return 1;
-	fseek(fw_bin, 0, SEEK_END);
+	printf("reading header...");
+	image = fopen("firmware.bin", "rb");
+	if (!image) return 1;
+	/*fseek(fw_bin, 0, SEEK_END);
 	size_t fw_size = ftell(fw_bin);
-	fseek(fw_bin, 0, SEEK_SET);
-	params.fwdata = malloc(fw_size);
-	fread(params.fwdata, 1, fw_size, fw_bin);
-	fclose(fw_bin);
-	printf("0x%06X\n", fw_size);
-#else
-	params.fwdata = firmware_bin;
-	printf("embedded\n");
-#endif
+	fseek(fw_bin, 0, SEEK_SET);*/
+	params.fwhdr = malloc(sizeof(fwHeader));
+	fread(params.fwhdr, 1, sizeof(fwHeader), image);
+	//fclose(fw_bin);
+	printf("0x%06X\n", sizeof(fwHeader));
 
 	return 0;
 
@@ -75,14 +70,11 @@ int main(void) {
 	printf("fwrun\n\n");
 	memset(&params, sizeof params, 1);
 
-#ifndef EMBEDDED_FIRMWARE
-
 	if (!fatInitDefault()) {
 		printf("fat init failure!\n");
 		hang();
 		return 1;
 	}
-#endif
 
 	if (fwRead()) {
 		printf("error!\n");

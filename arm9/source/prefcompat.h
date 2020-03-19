@@ -1,5 +1,4 @@
-#ifndef COMPAT3DS_H
-#define COMPAT3DS_H
+#pragma once
 
 #include <nds/ndstypes.h>
 
@@ -54,5 +53,3 @@ typedef struct {
 } fwPreferences;
 
 void patch_preferences();
-
-#endif
